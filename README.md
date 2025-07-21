@@ -72,3 +72,19 @@ Os desenvolvimentos atuais em tecnologia de radionavegação terrestre concentra
 
 As principais vantagens do GNSS são a alta precisão de posicionamento a longo prazo e o baixo custo do equipamento para o usuário. A principal limitação da navegação por satélite é a falta de continuidade do sinal. Os sinais GNSS são vulneráveis a interferências, tanto acidentais quanto intencionais. Eles também podem ser bloqueados, atenuados e refletidos por edifícios, terrenos e vegetação.radial de 1,0–3,9 m no plano horizontal e 1,6–6,3 m no eixo vertical, dependendo do serviço, do projeto do receptor e da geometria do sinal.
 
+### 1.4 Feature Matching
+
+As técnicas de correspondência de características determinam a posição do usuário comparando características do terreno ou ambiente com um banco de dados, da mesma forma que uma pessoa compararia pontos de referência com um mapa ou um conjunto de direções.
+
+Técnicas de correspondência de mapas utilizam o fato de que veículos terrestres geralmente trafegam em estradas ou trilhos e pedestres não atravessam paredes para restringir o desvio de uma solução de estimativa e/ou corrigir erros em uma medição de posicionamento. Elas acompanham a solução de navegação em um mapa e aplicam correções onde ela se desvia das áreas permitidas.
+
+### 1.5 The Complete Navigation System
+
+Para a maioria das aplicações de navegação pessoal, veículos rodoviários e rastreamento de ativos, os principais fatores são custo, tamanho, peso e consumo de energia. Consequentemente, diferentes combinações de sensores de navegação são adequadas para diferentes aplicações.
+
+Os sistemas de fixação de posição e de estimativa têm características de erro muito diferentes, portanto, para muitas aplicações, um sistema de estimativa, como o INS, é integrado
+com um ou mais sistemas de fixação de posição, como o GNSS.
+
+O sistema de estimativa fornece a solução de navegação integrada, pois opera continuamente, enquanto as medições do sistema de fixação de posição são usadas por um algoritmo de estimativa para aplicar correções à solução de navegação do sistema de estimativa.
+
+## Capítulo 2- Navigation Mathematics
