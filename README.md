@@ -87,4 +87,18 @@ com um ou mais sistemas de fixação de posição, como o GNSS.
 
 O sistema de estimativa fornece a solução de navegação integrada, pois opera continuamente, enquanto as medições do sistema de fixação de posição são usadas por um algoritmo de estimativa para aplicar correções à solução de navegação do sistema de estimativa.
 
-## Capítulo 2- Navigation Mathematics
+# PARTE 2- Navigation Mathematics
+
+## Capítulo 2- Coordinate Frames, Kinematics, and the Earth
+
+### 2.1 Coordinate Frames
+
+Para navegação a rotação da Terra tem um impacto significativo no cálculo da navegação.
+
+Sensores inerciais medem seu movimento em relação a um referencial inercial. O GPS mede a posição e a velocidade da antena de um receptor em relação a uma constelação de satélites. No entanto, o usuário deseja saber sua posição em relação à Terra. 1
+
+Assim, para uma navegação precisa, a relação entre os diferentes sistemas de coordenadas deve ser modelada adequadamente. Adota-se aqui uma convenção de usar letras gregas para denotar sistemas de coordenadas genéricos e letras romanas para denotar sistemas específicos.
+
+Um sistema de coordenadas pode ser definido de duas maneiras. Ele fornece uma origem e um conjunto de eixos em termos dos quais o movimento dos objetos pode ser descrito.
+
+Ele também define a posição e a orientação de um objeto. As duas definições são intercambiáveis. Em um problema de dois quadros, definir qual é o quadro do objeto e qual é o quadro de referência é arbitrário. É igualmente válido para descrever a posição e orientação do quadro α em relação ao quadro β como para descrever quadro  β em relação ao quadro α. Este é um princípio da relatividade: as leis da física parecem as mesmas para todos os observadores. Em outras palavras, descrever a posição de uma estrada em relação a um carro transmite a mesma informação que a posição do carro em relação à estrada.
