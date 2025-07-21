@@ -31,3 +31,44 @@ Um componente de um sistema de fixação de posição externo ao equipamento do 
 
 ### 1.1.2 Dead Reckoning
 Mede a mudança de posição ou mede a velocidade e a integra. Isso é adicionado à posição anterior para obter a posição atual.
+
+A velocidade ou distância percorrida é medida no sistema de coordenadas do corpo, portanto, uma medição de atitude separada é necessária para obter a direção de deslocamento no sistema de referência. Para navegação bidimensional, uma medição de rumo é suficiente, enquanto para navegação tridimensional, uma medição completa de atitude em três componentes é necessária.
+
+Quando a atitude muda, quanto menor o passo no cálculo da posição, mais precisa será a solução de navegação. Os cálculos eram originalmente realizados manualmente, limitando severamente a taxa de dados, mas agora são feitos por computador.
+
+Hoje, a contagem de passos pode ser automatizada usando um pedômetro, enquanto técnicas mais sofisticadas de estimativa de pedestres (PDR) usando acelerômetros também determinam o comprimento do passo. Um odômetro mede a distância contando as rotações de uma roda.
+
+Os métodos contemporâneos de medição de velocidade incluem o radar Doppler [3] e a integração de medições de acelerômetro em um sistema de navegação inercial. A altura pode ser calculada a partir de medições de pressão usando um altímetro barométrico (baro). Um altímetro de radar (radalt) mede a altura acima do terreno, podendo ser usado para determinar a altura de uma aeronave onde a altura do terreno é conhecida.
+
+Como o INS obtém atitude integrando medições de taxa angular feitas por giroscópios.
+
+A estimativa requer uma posição inicial conhecida, mas depois disso fornecerá uma solução de navegação ininterrupta, exceto em caso de falha do equipamento.
+
+### 1.2 Inertial Navigation
+
+Um inertial navigation system (INS), as vezes conhecido como inertial navigation unit (INU). É um sistema completo de navegação por estimativa tridimensional.
+
+Ele compreende um conjunto de sensores inerciais, conhecido como unidade de medição inercial (IMU), juntamente com um processador de navegação.
+
+O processador de navegação integra as saídas da IMU para fornecer a posição, velocidade e atitude.
+
+Os giroscópios medem a taxa angular, que é usada pelo processador de navegação para manter a solução de atitude do INS. Os acelerômetros, por outro lado, medem a força específica, que é a aceleração devida a todas as forças, exceto a gravidade. Os acelerômetros são alinhados com o corpo de navegação, de modo que a solução de atitude é usada para transformar a medição da força específica no sistema de coordenadas de resolução usado pelo processador de navegação. Um modelo gravitacional é então usado para obter a aceleração da força específica usando a solução de posição. A integração da aceleração produz a solução de velocidade, e a integração da velocidade fornece a solução de posição. A posição e a velocidade para todos os INS e o rumo para sistemas de nível inferior devem ser inicializados antes que o INS possa calcular uma solução de navegação.
+
+Os projetos de giroscópios se dividem em três categorias principais: giroscópios de massa giratória, giroscópios ópticos, incluindo giroscópios de laser em anel (RLGs) e giroscópios de fibra óptica interferométrica (IFOGs), e giroscópios vibratórios. A tecnologia de acelerômetros compreende acelerômetros pendulares e de feixe vibratório. Giroscópios e acelerômetros fabricados com tecnologia de sistemas microeletromecânicos (MEMS) oferecem as vantagens de baixo custo, tamanho e massa, além de alta tolerância a choques, mas apresentam desempenho relativamente baixo.
+
+Os erros em uma solução de navegação inercial aumentam com o tempo, à medida que erros sucessivos do acelerômetro e do giroscópio são somados.
+
+O feedback através do modelo gravitacional atua para estabilizar a posição horizontal e a velocidade, mas desestabiliza o canal vertical. O desempenho geral da navegação pode variar em várias ordens de magnitude, dependendo da qualidade dos sensores inerciais.
+
+### 1.3 Radio and Satellite Navigation
+
+### 1.3.1 Terrestrial Radio Navigation
+
+Esses sistemas de navegação não oferecem a mesma cobertura ou precisão que o GNSS e se limitam a fornecer apenas a posição horizontal. No entanto, eles fornecem um auxílio útil ao GNSS para aplicações críticas de segurança.
+
+Os desenvolvimentos atuais em tecnologia de radionavegação terrestre concentram-se em áreas urbanas, onde o desempenho do GNSS pode ser insatisfatório. O posicionamento por meio de telefones celulares e redes locais sem fio (WLAN) já está consolidado, enquanto técnicas baseadas em transmissões de TV e rádio e comunicações de banda ultralarga (UWB) foram prototipadas.
+
+### 1.3.2 Satellite Navigation
+
+As principais vantagens do GNSS são a alta precisão de posicionamento a longo prazo e o baixo custo do equipamento para o usuário. A principal limitação da navegação por satélite é a falta de continuidade do sinal. Os sinais GNSS são vulneráveis a interferências, tanto acidentais quanto intencionais. Eles também podem ser bloqueados, atenuados e refletidos por edifícios, terrenos e vegetação.radial de 1,0–3,9 m no plano horizontal e 1,6–6,3 m no eixo vertical, dependendo do serviço, do projeto do receptor e da geometria do sinal.
+
