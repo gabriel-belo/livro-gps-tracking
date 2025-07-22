@@ -102,3 +102,12 @@ Assim, para uma navegação precisa, a relação entre os diferentes sistemas de
 Um sistema de coordenadas pode ser definido de duas maneiras. Ele fornece uma origem e um conjunto de eixos em termos dos quais o movimento dos objetos pode ser descrito.
 
 Ele também define a posição e a orientação de um objeto. As duas definições são intercambiáveis. Em um problema de dois quadros, definir qual é o quadro do objeto e qual é o quadro de referência é arbitrário. É igualmente válido para descrever a posição e orientação do quadro α em relação ao quadro β como para descrever quadro  β em relação ao quadro α. Este é um princípio da relatividade: as leis da física parecem as mesmas para todos os observadores. Em outras palavras, descrever a posição de uma estrada em relação a um carro transmite a mesma informação que a posição do carro em relação à estrada.
+
+Um sistema de coordenadas ortogonais tem seis graus de liberdade, a posição da origem, o, e a orientação dos eixos, x, y e z.
+
+Qualquer problema de navegação envolve, portanto, pelo menos dois quadros de coordenadas: um quadro de objeto e um quadro de referência.
+
+O referencial do objeto descreve o corpo cuja posição e/ou orientação é desejada, enquanto o referencial descreve um corpo conhecido, como a Terra, em relação ao qual a posição e/ou orientação do objeto é desejada. Muitos problemas de navegação envolvem mais de um referencial ou até mesmo mais de um referencial de objeto.
+
+Quaisquer dois sistemas de coordenadas podem ter qualquer posição e atitude relativa. Eles também podem ter qualquer velocidade relativa, aceleração, rotação e assim por diante. A orientação de um quadro em relação a outro é um conjunto único de números, embora haja mais de uma maneira de representar a atitude. No entanto, as outras grandezas cinemáticas não o são. Elas compreendem vetores, que podem ser decompostos em componentes ao longo de quaisquer três eixos mutuamente perpendiculares.Por exemplo, a posição do quadro α em relação ao quadro β pode ser descrita usando os eixos do quadro α, os eixos do quadro β ou os eixos de um terceiro quadro γ. O restante desta seção define os principais sistemas de coordenadas usados em problemas de navegação: o sistema inercial centrado na Terra (ECI), o sistema fixo centrado na Terra (ECEF), a navegação local e o sistema corporal.
+
