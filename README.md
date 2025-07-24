@@ -109,5 +109,34 @@ Qualquer problema de navegação envolve, portanto, pelo menos dois quadros de c
 
 O referencial do objeto descreve o corpo cuja posição e/ou orientação é desejada, enquanto o referencial descreve um corpo conhecido, como a Terra, em relação ao qual a posição e/ou orientação do objeto é desejada. Muitos problemas de navegação envolvem mais de um referencial ou até mesmo mais de um referencial de objeto.
 
+O referencial conhecido (ou de referência) é o espaço ou o sistema de coordenadas de base em relação ao qual a posição e/ou orientação do referencial do objeto são definidas.
+
+Nós usamos as coordenadas dentro desse referencial conhecido para especificar onde o objeto está e como ele está orientado.
+
+Referenciais: Objeto vs. Conhecido:
+
+* Referencial do Objeto: É o sistema de coordenadas acoplado ao corpo cuja posição e/ou orientação você quer determinar. Pense em um avião, um satélite ou até mesmo um carro. O referencial do objeto se move junto com ele.
+
+* Referencial Conhecido (ou de Referência): Este é um sistema de coordenadas que serve como ponto de comparação. Geralmente, é um corpo cuja posição e orientação são bem estabelecidas e conhecidas, como a Terra. Ao descrever a posição de um objeto, você o faz em relação a este referencial conhecido.
+
+Exemplo: Se você quer saber onde está um carro, o carro é o "objeto" e a Terra (ou um mapa da Terra) é o "referencial conhecido". Você diria que o carro está a X quilômetros ao norte e Y quilômetros ao leste de um ponto de referência na Terra.
+
+Múltiplos Referenciais na Navegação
+
+Problemas de navegação são complexos porque muitas vezes envolvem mais de um referencial e, por vezes, até mais de um referencial de objeto.
+
+Exemplo: Imagine um avião (referencial de objeto 1) voando em relação à Terra (referencial conhecido). Dentro do avião, pode haver um drone (referencial de objeto 2) que se move em relação ao avião. Para rastrear o drone, você precisaria de informações tanto em relação ao avião quanto em relação à Terra.
+
 Quaisquer dois sistemas de coordenadas podem ter qualquer posição e atitude relativa. Eles também podem ter qualquer velocidade relativa, aceleração, rotação e assim por diante. A orientação de um quadro em relação a outro é um conjunto único de números, embora haja mais de uma maneira de representar a atitude. No entanto, as outras grandezas cinemáticas não o são. Elas compreendem vetores, que podem ser decompostos em componentes ao longo de quaisquer três eixos mutuamente perpendiculares.Por exemplo, a posição do quadro α em relação ao quadro β pode ser descrita usando os eixos do quadro α, os eixos do quadro β ou os eixos de um terceiro quadro γ. O restante desta seção define os principais sistemas de coordenadas usados em problemas de navegação: o sistema inercial centrado na Terra (ECI), o sistema fixo centrado na Terra (ECEF), a navegação local e o sistema corporal.
 
+Relação entre Sistemas de Coordenadas: Posição, Atitude e Outras Grandezas Cinemáticas
+
+O trecho destaca que dois sistemas de coordenadas quaisquer podem ter uma relação relativa complexa:
+
+Para descrever a relação entre dois sistemas de coordenadas (digamos, um sistema 'A' e um sistema 'B'), precisamos de dois tipos principais de informação:
+
+* Posição Relativa: Onde a origem de um sistema está em relação à origem do outro.
+
+* Atitude (Orientação) Relativa: Como os eixos de um sistema estão rotacionados em relação aos eixos do outro.
+
+Além disso, para descrever o movimento de um sistema em relação ao outro, precisamos das grandezas cinemáticas, como velocidade, aceleração e rotação.
