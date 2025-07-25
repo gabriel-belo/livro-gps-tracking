@@ -461,3 +461,99 @@ Esta é a parte crucial e um pouco abstrata:
 * É nesse "espaço" que o sensor detecta a inércia do movimento do corpo ao qual está preso. Por exemplo, se o corpo acelera, o sensor "sente" essa aceleração porque está mudando sua velocidade em relação a esse referencial inercial.
 
 O símbolo b é usado para denotar a estrutura do corpo do objeto primário de interesse. No entanto, muitos problemas de navegação envolvem múltiplos objetos, cada um com sua própria estrutura corporal, para os quais símbolos alternativos, como s para um satélite e a para uma antena, devem ser usados.
+
+### 2.1.5 Other Frames
+
+#### geocentric frame,
+
+O referencial geocêntrico, denotado por c, é semelhante ao referencial de navegação local, exceto que o eixo z aponta da origem para o centro da Terra. O eixo x é, novamente, a projeção da reta até o polo norte no plano ortogonal ao eixo z.
+
+O referencial do plano tangente, t, também é conhecido como referencial geodésico local. É semelhante ao referencial de navegação local, exceto que a origem não coincide com o objeto de navegação, mas sim é fixa em relação à Terra. Este quadro é usado para navegação em uma área localizada, como pouso de aeronaves.
+
+#### wander azimuth frame w (alguns autores usam n)
+
+A origem e o eixo z são coincidentes com os do quadro de navegação local.
+
+1. Alinhamento Nominal (Ideal)
+
+"Na maioria dos sistemas, os eixos sensíveis dos instrumentos inerciais são nominalmente alinhados com os eixos da estrutura do corpo..."
+
+* Eixos Sensíveis do Instrumento: Cada acelerômetro e giroscópio tem seus próprios eixos de medição internos. Por exemplo, um acelerômetro de três eixos tem um eixo sensível para X, um para Y e um para Z.
+
+* Estrutura do Corpo (Body Frame): É o sistema de coordenadas de referência do objeto onde a IMU está instalada (por exemplo, o chassi de um drone, a fuselagem de um avião).
+
+* Alinhamento Nominal: No projeto e fabricação, a intenção é que os eixos de medição do sensor (os "eixos sensíveis") fiquem perfeitamente alinhados com os eixos definidos para a estrutura do corpo. Se o eixo X do seu drone aponta para frente, espera-se que o eixo X do acelerômetro também aponte exatamente para frente.
+
+2. O Desvio (Misalignment)
+
+"...mas sempre haverá algum desvio."
+
+* Realidade da Fabricação: Na prática, é impossível atingir um alinhamento perfeito devido a tolerâncias de fabricação, montagem, temperatura e outros fatores. Sempre haverá um pequeno desvio angular (um desalinhamento minúsculo) entre os eixos sensíveis do instrumento e os eixos ideais da estrutura do corpo.
+
+* Impacto: Mesmo um desvio de frações de grau pode introduzir erros significativos nos cálculos de navegação, especialmente em aplicações de alta precisão ou ao longo do tempo. Se você assume que o eixo X do acelerômetro está perfeitamente alinhado com o eixo X do seu drone, mas ele está um pouco torto, todas as suas medições de aceleração nesse eixo serão ligeiramente projetadas nas outras direções.
+
+3. A Preferência por Tratar como Estruturas Separadas
+
+"Portanto, alguns autores preferem tratar esses eixos sensíveis como estruturas separadas de instrumentos inerciais, com uma estrutura de coordenadas para cada acelerômetro e giroscópio."
+
+* Abordagem Simplificada (Comum em Muitas Aplicações): Para muitos sistemas (como em smartphones ou drones amadores), assume-se que o desvio é negligenciável ou que ele já foi calibrado (corrigido) no firmware do sensor. Então, você simplesmente trata a IMU como um todo, com seus eixos já alinhados ao Body Frame do dispositivo.
+
+* Abordagem de Alta Precisão (A preferência de alguns autores): Em sistemas onde a precisão é crítica (por exemplo, navegação de mísseis, exploração espacial, drones profissionais de mapeamento), os engenheiros e pesquisadores não podem se dar ao luxo de ignorar esses pequenos desvios. Eles podem modelar cada sensor individualmente:
+
+* Cada sensor tem seu próprio "quadro de instrumento": Um acelerômetro X teria seu próprio quadro, o acelerômetro Y outro, e assim por diante para cada giroscópio.
+
+* Matrizes de Alinhamento: Seriam calculadas pequenas matrizes de rotação (ou "matrizes de alinhamento") para cada um desses "quadros de instrumento" que descrevem exatamente como ele está desalinhado em relação ao Body Frame principal.
+
+* Calibração Rigorosa: Essas matrizes seriam determinadas através de um processo de calibração muito rigoroso, onde o sistema é submetido a movimentos controlados e as leituras são comparadas com um referencial de verdade.
+
+* Para sistemas que exigem alta precisão, é fundamental saber e compensar esses pequenos desvios de alinhamento (também chamados de misalignment errors ou installation errors). Ignorá-los resultaria em erros significativos na posição, velocidade e atitude calculadas ao longo do tempo.
+
+Como se Descobre e Compensa Esses Desvios?
+
+O processo de descobrir e compensar esses desvios é chamado de calibração de alinhamento ou calibração de instalação. É uma parte crucial do processo de calibração geral de uma IMU.
+
+Aqui estão as formas mais comuns de fazer isso:
+
+1. Calibração em Mesa de Rotação (Gimbal) de Alta Precisão
+
+* O que é: Esta é a forma mais tradicional e precisa de calibração. A IMU é montada em uma mesa de rotação multi-eixos (com gimbals controlados com precisão).
+
+* Como funciona: A mesa é movida para posições e rotações conhecidas e muito precisas. As leituras da IMU são então comparadas com os valores de referência da mesa. As diferenças entre o que a IMU mede e o que deveria medir (dada a posição e orientação conhecida da mesa) são usadas para calcular os erros de alinhamento (e outros erros, como bias e scale factor).
+
+* Resultado: Uma matriz de calibração (ou uma série de parâmetros) é gerada. Essa matriz descreve o pequeno desalinhamento entre o quadro sensível da IMU e o quadro da mesa (que é um substituto para o Body Frame ideal).
+
+* Uso: Nos cálculos posteriores, cada leitura bruta da IMU é multiplicada por essa matriz de calibração para "corrigir" o desalinhamento, efetivamente rotacionando os dados do quadro real do sensor para o Body Frame nominal.
+
+2. Calibração no Campo / In-situ (com ou sem Referência Externa)
+
+Para IMUs de menor custo ou para sistemas que não podem ser levados para um laboratório com mesas de alta precisão, são usadas técnicas de calibração "no local".
+
+Com Referência Externa (GPS, LiDAR, etc.):
+
+* Ideia: O sistema IMU é integrado com outro sensor que fornece uma referência de posição ou orientação de alta precisão (como um GPS de dupla antena, um sistema LiDAR que mapeia o ambiente, ou até mesmo um sistema de posicionamento óptico).
+
+* Como funciona: O veículo com a IMU a bordo é movido em padrões específicos (por exemplo, voltas, acelerações e desacelerações) enquanto ambos os sensores (IMU e referência externa) coletam dados. Algoritmos de estimação (como Filtros de Kalman estendidos) usam a diferença entre os dados da IMU e os dados de referência para estimar o alinhamento da IMU em relação ao Body Frame do veículo (e, por extensão, em relação à referência externa).
+
+* Vantagem: Pode ser feito no ambiente de operação real.
+
+* Desvantagem: Depende da precisão do sensor de referência e do ambiente de operação.
+
+Sem Referência Externa (Apenas IMU - "Self-Calibration"):
+
+* Ideia: Explora as propriedades conhecidas da gravidade e da rotação da Terra.
+
+* Como funciona: O usuário move a IMU em uma sequência específica de orientações (por exemplo, colocá-la em cada uma das 6 faces de um cubo por um tempo, ou girá-la lentamente). Durante esse movimento, o acelerômetro pode ser usado para determinar a direção da gravidade em diferentes orientações, e o giroscópio pode detectar rotações. Algoritmos processam esses dados para estimar os erros, incluindo o desalinhamento.
+
+* Vantagem: Não requer equipamento externo caro.
+
+* Desvantagem: Geralmente menos preciso que a calibração com mesa de rotação, e pode ser mais sensível a ruído e distúrbios externos.
+
+No entanto, é geralmente mais simples tratar os desvios dos eixos do corpo (ou seja, os desalinhamentos da montagem do instrumento) como um conjunto de perturbações. Algumas IMUs são fabricadas em uma configuração "inclinada", na qual os eixos sensíveis dos sensores não estão alinhados com o invólucro. Neste caso, a estrutura do instrumento inercial deve ser considerada distinta da estrutura do corpo, embora a transformação seja frequentemente realizada dentro da IMU.
+
+1. Modelo de Perturbação: Para a maioria dos casos, pequenos desalinhamentos de fabricação são tratados como erros que são calibrados e corrigidos nos dados de saída. Os dados finais parecem vir de sensores perfeitamente alinhados com o Body Frame.
+
+2. Modelo de Estrutura Distinta (para IMUs Inclinadas): Para designs específicos onde os sensores são intencionalmente montados de forma não ortogonal, a relação entre os eixos do sensor e o invólucro da IMU é uma transformação geométrica fundamental. No entanto, essa transformação é geralmente gerenciada internamente pela própria IMU, entregando dados ao usuário em um formato ortogonal padrão.
+
+Outro problema é que, devido ao tamanho finito dos sensores, a origem de cada sensor será ligeiramente diferente. Antes do cálculo da solução de navegação, as saídas do sensor inercial devem ser transformadas em um ponto de referência comum. Novamente essa transformação geralmente é realizada dentro da IMU. 2 No cálculo do movimento de satélites GNSS, são utilizados referenciais de coordenadas orbitais, denotados por o.
+
+### 2.2 Kinematics
