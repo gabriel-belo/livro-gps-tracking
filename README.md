@@ -557,3 +557,59 @@ No entanto, é geralmente mais simples tratar os desvios dos eixos do corpo (ou 
 Outro problema é que, devido ao tamanho finito dos sensores, a origem de cada sensor será ligeiramente diferente. Antes do cálculo da solução de navegação, as saídas do sensor inercial devem ser transformadas em um ponto de referência comum. Novamente essa transformação geralmente é realizada dentro da IMU. 2 No cálculo do movimento de satélites GNSS, são utilizados referenciais de coordenadas orbitais, denotados por o.
 
 ### 2.2 Kinematics
+
+Na navegação, o movimento linear e angular de um sistema de coordenadas deve ser descrito em relação a outro.
+
+Quando falamos de movimento angular de um sistema de coordenadas, estamos falando sobre o quanto ele está girando, ou seja, o quanto a direção de seus eixos está variando no espaço.
+
+O movimento linear de um sistema de coordenadas descreve o quanto a sua origem (o ponto de referência do sistema) está se deslocando no espaço, em linha reta ou curva.
+
+A descrição do movimento seja completa e útil, é sempre necessário especificar qual é o referencial de origem (o "quadro de referência") em relação ao qual o movimento do outro quadro (referencial do objeto) está sendo descrito.
+
+A maioria das grandezas cinemáticas, como posição, velocidade, aceleração e taxa angular, envolvem três sistemas de coordenadas:
+
+* O quadro cujo movimento é descrito, conhecido como quadro do objeto   α
+* O quadro ao qual esse movimento se refere, conhecido como quadro de referência β
+* O conjunto de eixos em que esse movimento é representado, conhecido como quadro de resolução y
+
+O Quadro de Resolução (γ)
+
+* O quê: Este é o conjunto de eixos em que os valores numéricos (componentes) das grandezas cinemáticas são expressos. É onde os números que representam o vetor são "projetados".
+
+* Para que serve: É onde você "lê" os componentes X, Y, Z do vetor de posição, velocidade ou aceleração. A mesma grandeza física (o mesmo vetor) terá componentes diferentes se for resolvida em quadros diferentes.
+
+Exemplos:
+
+* Você pode querer a velocidade do avião (quadro α) em relação à Terra (quadro de referência β - ECEF), mas expressa nos eixos do próprio avião (quadro de resolução γ - Body Frame do avião). Isso lhe daria a velocidade do ar em termos de "para frente", "para o lado" e "para cima" do avião.
+
+* Ou você pode querer a aceleração do carro (quadro α) em relação à Terra (quadro de referência β - ECEF), mas expressa nos eixos Norte-Leste-Para Baixo da navegação local (quadro de resolução γ - LNF). Isso lhe daria a aceleração em termos de "aceleração para o Norte", "aceleração para o Leste" e "aceleração vertical".
+
+Exemplo Final para Solidificar
+
+Vamos pegar a velocidade.
+
+* Quadro do Objeto (α): O carro.
+
+* Quadro de Referência (β): A superfície da Terra (ou o ECEF).
+
+* Quadro de Resolução (γ):
+
+1. Cenário 1: Se você quer a velocidade do carro em relação à Terra, expressa nos eixos do carro. Aqui, γ=α. Isso é útil para o controle do carro (ex: "estou andando 50 km/h para frente do meu chassi").
+
+2. Cenário 2: Se você quer a velocidade do carro em relação à Terra, expressa nos eixos Norte-Leste-Para Baixo (LNF). Aqui, γ=LNF. Isso é útil para navegação em um mapa (ex: "estou andando 40 km/h para o Norte e 30 km/h para o Leste").
+
+O referencial do objeto, β, e o referencial, α, devem ser diferentes; caso contrário, não há movimento.
+
+Aqui, a seguinte notação é usada para posição cartesiana, velocidade, aceleração e taxa angular: vαβγ​
+
+Onde o vetor, x, descreve uma propriedade cinemática do quadro α em relação ao quadro β, expressa nos eixos do quadro γ. Para a atitude, apenas o quadro do objeto, α, e o quadro de referência, β, estão envolvidos; não há quadro de resolução.
+
+Todos os métodos de representação de atitude cumprem duas funções. Eles descrevem a orientação de um sistema de coordenadas em relação a outro (por exemplo, um sistema de objetos em relação a um sistema de referência). Eles também fornecem um meio de transformar um vetor de um conjunto de eixos de resolução para outro.
+
+Exemplo prático para a segunda função:
+
+Imagine um drone (Quadro do Objeto α) voando, e você tem um vetor de vento medido por um sensor no drone.
+
+* O sensor mede o vetor de vento nas coordenadas do drone (seu Body Frame - Quadro de Resolução γ1​). Por exemplo, o vento está vindo da direita do drone.
+
+* Agora, você quer saber a direção e magnitude desse vento em relação ao Norte e Leste da Terra (Quadro de Resolução γ2​ - o Local Navigation Frame).
